@@ -888,8 +888,8 @@
       const app = initializeApp(firebaseConfig);
         
         // Referencias a los servicios de Firebase
-        const auth = firebase.auth();
-        const db = firebase.firestore();
+        const auth = firebase.auth(app);
+        const db = firebase.firestore(app);
 
         // Estado global de la aplicación
         let currentUserRole = 'viewer';
@@ -2172,6 +2172,7 @@
 </body>
 
 </html>
+
 
 
 
