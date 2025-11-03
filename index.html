@@ -886,7 +886,7 @@
 
       // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+    const auth = firebase.auth(app);
     const db = firebase.firestore();
 
         // Estado global de la aplicación
@@ -2170,6 +2170,7 @@
 </body>
 
 </html>
+
 
 
 
