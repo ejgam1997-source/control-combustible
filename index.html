@@ -2174,10 +2174,23 @@
         }
 
         // --- FIN: Funciones de Exportación ---
+
+        // ===============================================
+        //  SOLUCIÓN PARA LOS ERRORES '...is not defined'
+        // ===============================================
+        // Exponer funciones necesarias al ámbito global
+        // para que los atributos 'onclick' y 'onchange'
+        // del HTML puedan encontrarlas.
+        window.eliminarTercero = eliminarTercero;
+        window.eliminarAnticipo = eliminarAnticipo;
+        window.eliminarConsumo = eliminarConsumo;
+        window.completarFactura = completarFactura;
+        window.adminChangeRole = adminChangeRole;
     </script>
 </body>
 
 </html>
+
 
 
 
