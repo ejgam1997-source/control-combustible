@@ -868,29 +868,29 @@
             </div>
     </div>
     
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import fb from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
-  export const firebase = !fb.apps.length ? fb.initializeApp(firebaseConfig) : fb.app();
-  import {firebase} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+<script>
+        // ----------------------------------------------------
+        // ⬇️ ¡PEGA AQUÍ TU CONFIGURACIÓN DE FIREBASE! ⬇️
+        // ----------------------------------------------------
+        // Reemplaza esto con el objeto de configuración de tu proyecto
+        const firebaseConfig = {
+            apiKey: "AIzaSyDs0S4ckp8a3CowADsF5VWKFeLe1cytIKQ",
+            authDomain: "ejgam1997-source.github.io",
+            projectId: "estados-de-cuenta-d798e",
+            storageBucket: "estados-de-cuenta-d798e.firebasestorage.app",
+            messagingSenderId: "936988926580",
+            appId: "1:936988926580:web:bb2e68f23bdb83b5236721"
+        };
+        // ----------------------------------------------------
+        // ⬆️ ¡PEGA AQUÍ TU CONFIGURACIÓN DE FIREBASE! ⬆️
+        // ----------------------------------------------------
 
-  // Your web app's Firebase configuration
-    const firebaseConfig = {
-    apiKey: "AIzaSyDs0S4ckp8a3CowADsF5VWKFeLe1cytIKQ",
-    authDomain: "ejgam1997-source.github.io",
-    projectId: "estados-de-cuenta-d798e",
-    storageBucket: "estados-de-cuenta-d798e.firebasestorage.app",
-    messagingSenderId: "936988926580",
-    appId: "1:936988926580:web:bb2e68f23bdb83b5236721"
-  };
-
-      // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = firebase.auth(app);
-    const db = firebase.firestore();
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        
+        // Referencias a los servicios de Firebase
+        const auth = firebase.auth();
+        const db = firebase.firestore();
 
         // Estado global de la aplicación
         let currentUserRole = 'viewer';
@@ -908,7 +908,6 @@
         let unlistenConsumos = () => {};
         let unlistenAnticipos = () => {};
         let unlistenUsers = () => {};
-
         
         // --- INICIO: Lógica de Autenticación y Roles ---
 
@@ -2173,6 +2172,7 @@
 </body>
 
 </html>
+
 
 
 
