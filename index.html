@@ -1402,8 +1402,8 @@
                 });
         }
         
-        function completarFactura(docId) {
-            db.collection('consumos').doc(docId).update({
+        function completarFactura(consumoId) {
+            db.collection('consumos').doc(consumoId).update({
                 estado: 'completada'
             })
             .then(() => {
@@ -1414,9 +1414,9 @@
             });
         }
         
-        function eliminarConsumo(docId) {
+        function eliminarConsumo(consumoId) {
             if (confirm('¿Está seguro de que desea eliminar este registro?')) {
-                db.collection('consumos').doc(docId).delete()
+                db.collection('consumos').doc(consumoId).delete()
                     .then(() => {
                         mostrarAlerta('consumos-alert', 'success', 'Registro eliminado.');
                     })
@@ -2176,22 +2176,4 @@
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
