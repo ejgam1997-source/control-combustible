@@ -1166,7 +1166,7 @@
                     if (showActions) {
                         actionsHTML = `
                             <td class="actions">
-                                <button class="danger" onclick="eliminarTercero('${tercero.id}')">Eliminar</button>
+                                <button class="danger" onclick="eliminarTercero('${doc.id}')">Eliminar</button>
                             </td>`;
                     }
 
@@ -1295,9 +1295,9 @@
                     
                     let accionesHTML = '';
                     if (showActions) {
-                        let actionsContent = `<button class="danger" onclick="eliminarConsumo('${docId}')">Eliminar</button>`;
+                        let actionsContent = `<button class="danger" onclick="eliminarConsumo('${doc.id}')">Eliminar</button>`;
                         if (consumo.tipo === 'factura' && consumo.estado === 'borrador') {
-                            actionsContent += `<button class="success" onclick="completarFactura('${docId}')">Completar</button>`;
+                            actionsContent += `<button class="success" onclick="completarFactura('${doc.id}')">Completar</button>`;
                         }
                         accionesHTML = `<td class="actions">${actionsContent}</td>`;
                     }
@@ -1499,7 +1499,7 @@
                     if (showActions) {
                         actionsHTML = `
                             <td class="actions">
-                                <button class="danger" onclick="eliminarAnticipo('${docId}')">Eliminar</button>
+                                <button class="danger" onclick="eliminarAnticipo('${doc.id}')">Eliminar</button>
                             </td>`;
                     }
 
@@ -2178,6 +2178,7 @@
 </body>
 
 </html>
+
 
 
 
