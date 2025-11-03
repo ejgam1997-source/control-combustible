@@ -1269,6 +1269,57 @@
         }
         
         // Funciones para Consumos y Facturas
+
+    
+        function listenForConsumos() {
+            unlistenConsumos = db.collection('consumos').orderBy('fecha', 'desc').onSnapshot((snapshot) => {
+                const tbody = document.getElementById('consumos-tbody');
+                tbody.innerHTML = '';
+                
+                const showActions = currentUserRole === 'admin' || currentUserRole === 'editor';
+                document.querySelector('#consumos-table .actions-header').style.display = showActions ? '' : 'none';
+                
+                snapshot.forEach(doc => {
+                    const consumo = doc.data();
+                    const tercero = obtenerTerceroPorId(consumo.terceroId);
+                    const tr = document.createElement('tr');
+                    
+                    let noDocumento = consumo.noDocumento || '-';
+                    let estadoHTML = '';
+                    
+                    if (consumo.tipo === 'factura') {
+                        estadoHTML = `<span class="status-badge ${consumo.estado}">${consumo.estado === 'borrador' ? 'Borrador' : 'Completada'}</span>`;
+                    } else {
+                        estadoHTML = '-';
+                    }
+                    
+                    let accionesHTML = '';
+                    if (showActions) {
+                        let actionsContent = `<button class="danger" onclick="eliminarConsumo('${doc.id}')">Eliminar</button>`;
+                        if (consumo.tipo === 'factura' && consumo.estado === 'borrador') {
+                            actionsContent += `<button class="success" onclick="completarFactura('${doc.id}')">Completar</button>`;
+                        }
+                        accionesHTML = `<td class="actions">${actionsContent}</td>`;
+                    }
+                    
+                    tr.innerHTML = `
+                        <td>${tercero.razonSocial}</td>
+                        <td>${formatearFecha(consumo.fecha)}</td>
+                        <td>${noDocumento}</td>
+                        <td>${formatearMoneda(consumo.valor)}</td>
+                        <td>${formatearMoneda(consumo.retencionRenta)}</td>
+                        <td>${formatearMoneda(consumo.retencionICA)}</td>
+                        <td>${formatearMoneda(consumo.total)}</td>
+                        <td>${estadoHTML}</td>
+                        ${accionesHTML}
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+                // Cada vez que cambian los consumos, actualizamos el estado de cuenta
+                actualizarEstadoCuenta();
+            });
+        }
     function agregarConsumo(e) {
             e.preventDefault();
             
@@ -1428,55 +1479,6 @@
     
 
     
-        function listenForConsumos() {
-            unlistenConsumos = db.collection('consumos').orderBy('fecha', 'desc').onSnapshot((snapshot) => {
-                const tbody = document.getElementById('consumos-tbody');
-                tbody.innerHTML = '';
-                
-                const showActions = currentUserRole === 'admin' || currentUserRole === 'editor';
-                document.querySelector('#consumos-table .actions-header').style.display = showActions ? '' : 'none';
-                
-                snapshot.forEach(doc => {
-                    const consumo = doc.data();
-                    const tercero = obtenerTerceroPorId(consumo.terceroId);
-                    const tr = document.createElement('tr');
-                    
-                    let noDocumento = consumo.noDocumento || '-';
-                    let estadoHTML = '';
-                    
-                    if (consumo.tipo === 'factura') {
-                        estadoHTML = `<span class="status-badge ${consumo.estado}">${consumo.estado === 'borrador' ? 'Borrador' : 'Completada'}</span>`;
-                    } else {
-                        estadoHTML = '-';
-                    }
-                    
-                    let accionesHTML = '';
-                    if (showActions) {
-                        let actionsContent = `<button class="danger" onclick="eliminarConsumo('${doc.id}')">Eliminar</button>`;
-                        if (consumo.tipo === 'factura' && consumo.estado === 'borrador') {
-                            actionsContent += `<button class="success" onclick="completarFactura('${doc.id}')">Completar</button>`;
-                        }
-                        accionesHTML = `<td class="actions">${actionsContent}</td>`;
-                    }
-                    
-                    tr.innerHTML = `
-                        <td>${tercero.razonSocial}</td>
-                        <td>${formatearFecha(consumo.fecha)}</td>
-                        <td>${noDocumento}</td>
-                        <td>${formatearMoneda(consumo.valor)}</td>
-                        <td>${formatearMoneda(consumo.retencionRenta)}</td>
-                        <td>${formatearMoneda(consumo.retencionICA)}</td>
-                        <td>${formatearMoneda(consumo.total)}</td>
-                        <td>${estadoHTML}</td>
-                        ${accionesHTML}
-                    `;
-                    tbody.appendChild(tr);
-                });
-
-                // Cada vez que cambian los consumos, actualizamos el estado de cuenta
-                actualizarEstadoCuenta();
-            });
-        }
         
                 
         // Funciones para Anticipos
@@ -2176,4 +2178,5 @@
 </body>
 
 </html>
+
 
