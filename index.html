@@ -696,6 +696,7 @@
                         <option value="">Todos los terceros</option>
                     </select>
                 </div>
+        
                 <h3 style="margin-top: 2rem;">Registros de Consumos y Facturas</h3>
                 <table id="consumos-table">
                     <thead>
@@ -914,9 +915,11 @@
         
         // Tercero seleccionado para estado de cuenta
         let terceroSeleccionado = '';
+    
         // Estado para los filtros de las tablas
         let filtroTerceroConsumos = '';
         let filtroTerceroAnticipos = '';
+        
         // Listeners globales para listeners de DB (para poder "desactivarlos" al hacer logout)
         let unlistenTerceros = () => {};
         let unlistenConsumos = () => {};
@@ -1266,7 +1269,9 @@
                 'tercero-factura-adicional',
                 'tercero-recibo',
                 'tercero-anticipo',
-                'tercero-estado-cuenta'
+                'tercero-estado-cuenta',
+                'filtro-tercero-consumo',
+                'filtro-tercero-anticipo'
             ];
             
             selectores.forEach(selectorId => {
@@ -2244,6 +2249,7 @@
 </body>
 
 </html>
+
 
 
 
