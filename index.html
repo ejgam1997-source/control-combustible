@@ -1273,7 +1273,11 @@
                 const selector = document.getElementById(selectorId);
                 const valorActual = selector.value;
                 
-                selector.innerHTML = selectorId === 'tercero-estado-cuenta' 
+                const esFiltro = selectorId === 'tercero-estado-cuenta' || 
+                                 selectorId === 'filtro-tercero-consumo' || 
+                                 selectorId === 'filtro-tercero-anticipo';
+                
+                selector.innerHTML = esFiltro 
                     ? '<option value="">Todos los terceros</option>' 
                     : '<option value="">Seleccione un tercero</option>';
                 
@@ -1297,8 +1301,19 @@
         // Funciones para Consumos y Facturas
 
     
+        // ===== REEMPLAZA LA FUNCIÓN ENTERA ===== -->
         function listenForConsumos() {
-            unlistenConsumos = db.collection('consumos').orderBy('fecha', 'desc').onSnapshot((snapshot) => {
+            // 1. Empezar la consulta base
+            let query = db.collection('consumos');
+            
+            // 2. Aplicar filtro si existe (si la variable no está vacía)
+            if (filtroTerceroConsumos) {
+                query = query.where('terceroId', '==', filtroTerceroConsumos);
+            }
+            
+            // 3. Aplicar orden y ejecutar el listener
+            // (Si se filtra, Firestore ordenará primero por 'terceroId' y luego por 'fecha')
+            unlistenConsumos = query.orderBy('fecha', 'desc').onSnapshot((snapshot) => {
                 const tbody = document.getElementById('consumos-tbody');
                 tbody.innerHTML = '';
                 
@@ -1306,6 +1321,7 @@
                 document.querySelector('#consumos-table .actions-header').style.display = showActions ? '' : 'none';
                 
                 snapshot.forEach(doc => {
+                    // ... (El resto de la función original sigue exactamente igual)
                     const consumo = doc.data();
                     const tercero = obtenerTerceroPorId(consumo.terceroId);
                     const tr = document.createElement('tr');
@@ -1346,6 +1362,7 @@
                 actualizarEstadoCuenta();
             });
         }
+        // ===== FIN DEL REEMPLAZO ===== -->
     function agregarConsumo(e) {
             e.preventDefault();
             
@@ -1508,8 +1525,18 @@
         
                 
         // Funciones para Anticipos
+        // ===== REEMPLAZA LA FUNCIÓN ENTERA ===== -->
         function listenForAnticipos() {
-            unlistenAnticipos = db.collection('anticipos').orderBy('fecha', 'desc').onSnapshot((snapshot) => {
+            // 1. Empezar la consulta base
+            let query = db.collection('anticipos');
+
+            // 2. Aplicar filtro si existe
+            if (filtroTerceroAnticipos) {
+                query = query.where('terceroId', '==', filtroTerceroAnticipos);
+            }
+            
+            // 3. Aplicar orden y ejecutar el listener
+            unlistenAnticipos = query.orderBy('fecha', 'desc').onSnapshot((snapshot) => {
                 const tbody = document.getElementById('anticipos-tbody');
                 tbody.innerHTML = '';
                 
@@ -1517,6 +1544,7 @@
                 document.querySelector('#anticipos-table .actions-header').style.display = showActions ? '' : 'none';
 
                 snapshot.forEach(doc => {
+                    // ... (El resto de la función original sigue exactamente igual)
                     const anticipo = doc.data();
                     const tercero = obtenerTerceroPorId(anticipo.terceroId);
                     const tr = document.createElement('tr');
@@ -1543,7 +1571,7 @@
                 actualizarEstadoCuenta();
             });
         }
-        
+        // ===== FIN DEL REEMPLAZO ===== -->        
         function agregarAnticipo(e) {
             e.preventDefault();
             
@@ -2216,6 +2244,7 @@
 </body>
 
 </html>
+
 
 
 
