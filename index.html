@@ -959,6 +959,19 @@
                 terceroSeleccionado = this.value;
                 actualizarEstadoCuenta();
             });
+
+            // Listeners para los nuevos filtros de sección
+            document.getElementById('filtro-tercero-consumo').addEventListener('change', function() {
+                filtroTerceroConsumos = this.value;
+                unlistenConsumos(); // Detener el listener anterior
+                listenForConsumos(); // Iniciar uno nuevo con el filtro
+            });
+            
+            document.getElementById('filtro-tercero-anticipo').addEventListener('change', function() {
+                filtroTerceroAnticipos = this.value;
+                unlistenAnticipos(); // Detener el listener anterior
+                listenForAnticipos(); // Iniciar uno nuevo con el filtro
+            });
             
             // Configurar botones de exportación
             document.getElementById('exportar-pdf').addEventListener('click', exportarPDF);
@@ -2203,6 +2216,7 @@
 </body>
 
 </html>
+
 
 
 
