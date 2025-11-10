@@ -247,6 +247,16 @@
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
+
+/* ===== INICIO: CÓDIGO A AGREGAR ===== */
+        /* Alinea los números a la derecha en las tablas de Estado de Cuenta */
+        #estado-consumos-table th:nth-child(n+4),
+        #estado-consumos-table td:nth-child(n+4),
+        #estado-anticipos-table th:nth-child(n+4),
+        #estado-anticipos-table td:nth-child(n+4) {
+            text-align: right;
+        }
+        /* ===== FIN: CÓDIGO A AGREGAR ===== */
         
         th {
             background-color: var(--light-color);
@@ -2249,6 +2259,7 @@
 </body>
 
 </html>
+
 
 
 
