@@ -1994,9 +1994,7 @@
             const terceroId = document.getElementById('tercero-estado-cuenta').value;
             const tercero = terceroId ? obtenerTerceroPorId(terceroId) : null;
             generarPDFNativo(tercero);
-        }
-        // ===== INICIO: CÓDIGO A REEMPLAZAR =====
-        // (Esta es la función PDF nativo con la alineación corregida)
+        }// ===== INICIO: CÓDIGO CORREGIDO PARA ALINEACIÓN PDF =====
 
         function generarPDFNativo(tercero) {
             const nombreArchivo = tercero 
@@ -2094,6 +2092,12 @@
             const tablaConsumos = document.getElementById('estado-consumos-table');
             const filasConsumos = tablaConsumos.querySelectorAll('tbody tr');
             
+            // --- CONSTANTES DE COORDENADAS PARA CONSUMOS (Alineadas a la derecha) ---
+            const colConsumoValor = 120; 
+            const colConsumoRenta = 145; 
+            const colConsumoICA = 170; 
+            const colConsumoTotal = pageWidth - margin; // Usamos el borde derecho de la página
+            
             pdf.setFillColor(44, 62, 80);
             pdf.rect(margin, yPos, contentWidth, 8, 'F');
             pdf.setFont("helvetica", "bold");
@@ -2103,12 +2107,7 @@
             pdf.text("Fecha", margin + 55, yPos + 5);
             pdf.text("Documento", margin + 75, yPos + 5);
             
-            // --- CAMBIOS DE ALINEACIÓN AQUÍ (TÍTULOS CONSUMOS) ---
-            const colConsumoValor = margin + 120;
-            const colConsumoRenta = margin + 140;
-            const colConsumoICA = margin + 160;
-            const colConsumoTotal = margin + 190;
-            
+            // Títulos Consumos
             pdf.text("Valor", colConsumoValor, yPos + 5, { align: "right" });
             pdf.text("Ret. Renta", colConsumoRenta, yPos + 5, { align: "right" });
             pdf.text("Ret. ICA", colConsumoICA, yPos + 5, { align: "right" });
@@ -2134,7 +2133,7 @@
                     pdf.text("Fecha", margin + 55, yPos + 5);
                     pdf.text("Documento", margin + 75, yPos + 5);
                     
-                    // --- CAMBIOS DE ALINEACIÓN AQUÍ (TÍTULOS CONSUMOS - SALTO DE PÁGINA) ---
+                    // Títulos Consumos - Salto de página
                     pdf.text("Valor", colConsumoValor, yPos + 5, { align: "right" });
                     pdf.text("Ret. Renta", colConsumoRenta, yPos + 5, { align: "right" });
                     pdf.text("Ret. ICA", colConsumoICA, yPos + 5, { align: "right" });
@@ -2156,7 +2155,7 @@
                 pdf.text(celdas[1].textContent, margin + 55, yPos + 4);
                 pdf.text(celdas[2].textContent.substring(0, 12), margin + 75, yPos + 4);
                 
-                // --- CAMBIOS DE ALINEACIÓN AQUÍ (DATOS CONSUMOS) ---
+                // Datos Consumos
                 pdf.text(celdas[3].textContent, colConsumoValor, yPos + 4, { align: "right" });
                 pdf.text(celdas[4].textContent, colConsumoRenta, yPos + 4, { align: "right" });
                 pdf.text(celdas[5].textContent, colConsumoICA, yPos + 4, { align: "right" });
@@ -2174,6 +2173,9 @@
             
             yPos += 8;
             
+            // --- CONSTANTES DE COORDENADAS PARA ANTICIPOS (Alineadas a la derecha) ---
+            const colAnticipoValor = pageWidth - margin; // Usamos el borde derecho de la página
+            
             pdf.setFillColor(44, 62, 80);
             pdf.rect(margin, yPos, contentWidth, 8, 'F');
             pdf.setFont("helvetica", "bold");
@@ -2183,8 +2185,7 @@
             pdf.text("Fecha", margin + 60, yPos + 5);
             pdf.text("Documento", margin + 90, yPos + 5);
 
-            // --- CAMBIOS DE ALINEACIÓN AQUÍ (TÍTULO ANTICIPOS) ---
-            const colAnticipoValor = margin + 190; // Alineado con "Total" de la tabla de arriba
+            // Título Anticipos
             pdf.text("Valor", colAnticipoValor, yPos + 5, { align: "right" });
             
             yPos += 10;
@@ -2210,7 +2211,7 @@
                     pdf.text("Fecha", margin + 60, yPos + 5);
                     pdf.text("Documento", margin + 90, yPos + 5);
                     
-                    // --- CAMBIOS DE ALINEACIÓN AQUÍ (TÍTULO ANTICIPOS - SALTO DE PÁGINA) ---
+                    // Título Anticipos - Salto de página
                     pdf.text("Valor", colAnticipoValor, yPos + 5, { align: "right" });
                     
                     yPos += 10;
@@ -2229,7 +2230,7 @@
                 pdf.text(celdas[1].textContent, margin + 60, yPos + 4);
                 pdf.text(celdas[2].textContent.substring(0, 20), margin + 90, yPos + 4);
                 
-                // --- CAMBIOS DE ALINEACIÓN AQUÍ (DATOS ANTICIPOS) ---
+                // Datos Anticipos
                 pdf.text(celdas[3].textContent, colAnticipoValor, yPos + 4, { align: "right" });
                 
                 yPos += 6;
@@ -2257,6 +2258,8 @@
             
             document.getElementById('loading-overlay').style.display = 'none';
         }
+
+        // ===== FIN: CÓDIGO CORREGIDO PARA ALINEACIÓN PDF =====
         
         function exportarDOCX() {
             alert('Funcionalidad de exportación a DOCX en desarrollo.');
@@ -2279,6 +2282,7 @@
 </body>
 
 </html>
+
 
 
 
